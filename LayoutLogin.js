@@ -4,7 +4,7 @@ import {BlurView} from '@react-native-community/blur';
 
 const imageURL = { uri: "https://thuthuatnhanh.com/wp-content/uploads/2020/09/hinh-nen-la-cay-mau-xanh-dam.jpg" };
 
-const App = () => (
+const LayoutLogin = () => (
     <View style={styles.containerBackground }>
       {/* ---------------------------- */}
 
@@ -126,4 +126,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default App;
+export default LayoutLogin;
