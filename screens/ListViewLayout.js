@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, {useRef, useState} from "react";
 const imageBackURL={uri: 'https://image-us.24h.com.vn/upload/2-2019/images/2019-05-24/1558632139-277-untitled-26-1558607358-width650height640.jpg'};
 const imageMenuURL={uri: 'https://cdn.iconscout.com/icon/free/png-256/menu-2694328-2236324.png'};
 const imageMenuAcountURL={uri: 'https://static.thenounproject.com/png/521077-200.png'};
+import {windowHeight, windowWidth, window} from "../utils";
+
 export const searchIcon = require("../assets/icons/search.png");
 import {
     FlatList,
@@ -12,12 +14,14 @@ import {
     TouchableOpacity,
     Image,
     View,
-    TextInput,
+    TextInput, Platform,
 } from "react-native";
 import { SearchBar,Icon} from 'react-native-elements';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {useFonts} from "expo-font";
+import Carousel, {ParallaxImage} from "react-native-snap-carousel";
+import {Touchable} from "react-native-web";
 
 const DATA = [
     {
@@ -38,7 +42,7 @@ const DATA = [
 ];
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
-    <SafeAreaView style={{width: 250,height:'100%'}}>
+    <SafeAreaView style={[{width:'55%',height:'100%'},styles.shadow]}>
         <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor,styles.radius,{
             flex: 1,
             lexDirection: 'collum',
@@ -56,22 +60,38 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
         </TouchableOpacity>
     </SafeAreaView>
 );
-const ItemImage = ({ item}) => (
-    <SafeAreaView style={[{width: 200,height:'100%'},styles.item]}>
-        <TouchableOpacity  style={[styles.item,styles.radius,{}]}>
+const ItemImage = ({ item}, parallaxProps) => (
+    <SafeAreaView style={[{width:300,height:'100%'},styles.item,styles.shadow]}>
+        <TouchableOpacity  style={[styles.item,styles.radius]}>
             <Image style={[{
                 width:'100%',
                 height : '100%',
-                // resizeMode: "contain",
+                resizeMode: "contain",
 
             }]} source={{uri: item.image}}/>
 
+            <ParallaxImage
+                source={{uri: item.image}}
+                itemHeight={300}
+                containerStyle={styles.imageContainer}
+                style={[styles.image,{height: 300,width: 300}]}
+                parallaxFactor={0.4}
+                {...parallaxProps}
+            />
         </TouchableOpacity>
     </SafeAreaView>
 );
 
-function HomeScreen() {
+const ListViewLayout = props => {
     const [selectedId, setSelectedId] = useState(null);
+    const [entries, setEntries] = useState([]);
+    const carouselRef = useRef(null);
+
+    const [] = useFonts({
+        "Lato-Black" : require('../assets/fonts/Lato-Black.ttf'),
+        "Lato-Bold" : require('../assets/fonts/Lato-Bold.ttf'),
+
+    })
     const renderItem = ({item}) => {
         const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
         const color = item.id === selectedId ? '#5e7f51' : 'black';
@@ -85,48 +105,6 @@ function HomeScreen() {
             />
         );
     };
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <FlatList
-                horizontal
-                data={DATA}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id}
-                extraData={selectedId}
-            />
-        </View>
-    );
-}
-
-function SettingsScreen() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Settings!</Text>
-        </View>
-    );
-}
-
-const Tab = createBottomTabNavigator(
-    // {
-    //     // tabBarOptions: {
-    //     //     style: styles.tabBar,
-    //     //     labelStyle: styles.labelStyle,
-    //     //     tabStyle: styles.tabStyle
-    //     // },
-    //     tabStyle: {
-    //         justifyContent: 'center'
-    //     },
-    //     showIcon: false
-    // }
-);
-
-const App = () => {
-    const [selectedId, setSelectedId] = useState(null);
-    const [] = useFonts({
-        "Lato-Black" : require('./assets/fonts/Lato-Black.ttf'),
-        "Lato-Bold" : require('./assets/fonts/Lato-Bold.ttf'),
-
-    })
 
     const renderItemImage = ({item}) => {
         return (
@@ -138,10 +116,10 @@ const App = () => {
 
     return (
 
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             {/*Action bar------------------*/}
             <View style={{
-                flex: 0.8, flexDirection: "row", justifyContent: "space-between",marginTop: 30,}}>
+                flex: 0.8, flexDirection: "row", justifyContent: "space-between",marginTop: 5,}}>
                 <TouchableOpacity style={{elevation:15}}>
                     <Image style={[styles.radiusCircle,
                         {
@@ -161,41 +139,76 @@ const App = () => {
             </View>
 
             {/*Search----------------*/}
-            <View style={[styles.searchSection, styles.radiusCircle, {
+            <View style={[styles.searchSection, styles.radiusCircle,styles.shadow, {
                 flex: 0.6,
                 justifyContent: "flex-start",
                 elevation: 30,
             }]}>
                 {/*<Icon style={styles.searchIcon} name="ios-search" size={20} color="#000"/>*/}
                 <Image source={searchIcon} style={{
+                    marginLeft: 30,
                     width: 25,
                     height: 25,
-                    tintColor: focused ? COLORS.primary : COLORS.secondary
+
                 }}/>
                 <TextInput
-                    style={styles.input}
+                    style={[styles.input,{marginLeft: 20}]}
                     placeholder="Search"
-                    onChangeText={(searchString) => {
-                        this.setState({searchString})
-                    }}
                     underlineColorAndroid="transparent"
                 />
             </View>
 
             {/*List View-------------------*/}
-            <View style={[, {flex: 5}]}>
-                <NavigationContainer>
-                    <Tab.Navigator>
-                        <Tab.Screen name="Home" component={HomeScreen} />
-                        <Tab.Screen name="Settings" component={SettingsScreen} />
-                    </Tab.Navigator>
-                </NavigationContainer>
+            <View style={{ flex: 5, justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{flex:1, flexDirection: "row", justifyContent: "flex-start"}}>
+                    <View style={{width : "15%",
+                        borderBottomRightRadius: 10,
+                        backgroundColor: 'transparent'
+                    }}>
+                        <View style={{
+                            borderBottomRightRadius: 10,
+                            backgroundColor: 'transparent'
+                            }}>
+                            <TouchableOpacity>
+                                <Text style={[styles.textVertical,{color: "#4b5f43"}]}>Outdoor</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <Text style={[styles.textVertical,]}>Indoor</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <Text style={[styles.textVertical,]}>Top</Text>
+                            </TouchableOpacity>
+
+                        </View>
+
+                    </View>
+                    {/*<FlatList*/}
+                    {/*    horizontal*/}
+                    {/*    data={DATA}*/}
+                    {/*    renderItem={renderItem}*/}
+                    {/*    showsHorizontalScrollIndicator={false}*/}
+                    {/*    keyExtractor={(item) => item.id}*/}
+                    {/*    extraData={selectedId}*/}
+                    {/*    style={{width: "85%"}}*/}
+                    {/*/>*/}
+
+                    <Carousel
+                        data={DATA}
+                        layout={"stack"}
+                        renderItem={renderItem}
+                        sliderWidth={300}
+                        itemWidth={500}
+
+                    />
+
+
+                </View>
 
             </View>
 
 
             {/*Popular------------------------*/}
-            <View style={[{flex: 3}]}>
+            <View style={[{flex: 2.5}]}>
                 {/*Text--------------------*/}
                 <View style={[{flex: 1, flexDirection: "row", justifyContent: "space-between"}]}>
                     <Text style={[styles.textBold]}>Popular</Text>
@@ -207,13 +220,15 @@ const App = () => {
                                source={imageMenuURL}/>
                     </TouchableOpacity>
                 </View>
-                <View style={[{flex:4}, , styles.itemImage]}>
-                    <FlatList
-                        horizontal
+                <View style={[{flex:4, justifyContent: "center"}, styles.itemImage]}>
+                    <Carousel
+                        ref={carouselRef}
+                        sliderWidth={windowWidth}
+                        sliderHeight={300}
+                        itemWidth={300 - 30}
                         data={DATA}
                         renderItem={renderItemImage}
-                        keyExtractor={(item) => item.id}
-                        extraData={selectedId}
+                        hasParallaxImages={true}
                     />
 
                 </View>
@@ -221,7 +236,7 @@ const App = () => {
 
             </View>
 
-        </View>
+        </SafeAreaView>
     );
 }, styles = StyleSheet.create({
     container: {
@@ -263,6 +278,14 @@ const App = () => {
         justifyContent: "center",
 
     },
+    textVertical: {
+        transform: [{ rotate: '90deg' }], width:120,
+        fontSize: 25,
+        fontWeight: "bold",
+        marginTop: 100,
+        marginLeft: -30,
+        color: "#827873",
+    },
     textBold: {
         fontSize: 25,
         fontWeight: "bold",
@@ -271,32 +294,6 @@ const App = () => {
         marginBottom: 3,
         marginLeft: 20,
         color: "#827873",
-    },
-    textTree: {
-        fontSize: 16,
-        textAlign: "center",
-        marginTop: 10,
-        marginBottom: 10,
-    },
-    textBtn: {
-        fontSize: 18,
-        textAlign: "center",
-        fontWeight: "bold",
-        marginTop: 10,
-        marginBottom: 10,
-    },
-    radiusBtn: {
-        borderRadius: 60,
-        backgroundColor: "#152824",
-        marginBottom: 10,
-        marginLeft: 30,
-        marginRight: 30
-    },
-    radiusBorder: {
-        borderRadius: 15,
-        borderWidth: 1,
-        borderColor: '#d4d3d2',
-        marginRight: 10,
     },
     radiusCircle: {
         borderRadius: 100,
@@ -313,7 +310,27 @@ const App = () => {
         height: "100%",
         textAlign: "center",
     },
+    shadow: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        elevation: 3,
+    },
+    imageParallax: {
+        ...StyleSheet.absoluteFillObject,
+        resizeMode: 'cover',
+    },
+    imageContainer: {
+        flex: 1,
+        marginBottom: Platform.select({ios: 0, android: 1}), // Prevent a random Android rendering issue
+        backgroundColor: 'white',
+        borderRadius: 8,
+    },
 });
 
 
-export default App;
+export default ListViewLayout;

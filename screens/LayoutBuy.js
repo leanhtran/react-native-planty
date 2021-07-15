@@ -3,7 +3,7 @@ import {Text, Image,View,StyleSheet,TouchableOpacity} from "react-native";
 const imageURL={uri: 'https://ecogarden.net.vn/wp-content/uploads/2019/06/dba25ce8c08ceb84c8a471ab7fd0df46.jpg'};
 const imageBackURL={uri: 'https://png.pngtree.com/png-vector/20190501/ourlarge/pngtree-vector-back-icon-png-image_1009850.jpg'};
 const imageMenuURL={uri: 'https://cdn.iconscout.com/icon/free/png-256/menu-2694328-2236324.png'};
-const App=()=>(
+const LayoutBuy=()=>(
 
     <View style={styles.container}>
         {/*Action bar------------------*/}
@@ -160,4 +160,4 @@ const styles=StyleSheet.create({
         marginRight: 20
     }
 });
-export default App;
+export default LayoutBuy;

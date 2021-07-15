@@ -1,10 +1,13 @@
 import React from "react";
 import { ImageBackground, StyleSheet, Text, View, Button, Alert,TouchableOpacity,Image } from "react-native";
 import {BlurView} from '@react-native-community/blur';
+import {windowHeight, windowWidth, window} from "../utils";
+import Test from "./Test"
+
 
 const imageURL = { uri: "https://thuthuatnhanh.com/wp-content/uploads/2020/09/hinh-nen-la-cay-mau-xanh-dam.jpg" };
 
-const LayoutLogin = () => (
+const LayoutLogin = (props) => (
     <View style={styles.containerBackground }>
       {/* ---------------------------- */}
 
@@ -29,9 +32,10 @@ const LayoutLogin = () => (
 
             <TouchableOpacity
                 style={[styles.radius,styles.tranparent]}
-                onPress={() =>
-                    navigation.navigate('LayoutBuy.js', { name: 'Jane' })
-                }
+                onPress={() => {
+                  // console.log('tesst',props)
+                  props.navigation.navigate('Test')
+                }}
                 underlayColor='#fff'>
               <Text style={[styles.textBtn,{color:"#fff"}]}
               >Sign in</Text>
@@ -41,7 +45,7 @@ const LayoutLogin = () => (
 
             <TouchableOpacity
                 style={[styles.radius,styles.btnLogin]}
-                onPress={() => this.submitSuggestion(this.props)}
+                onPress={() => this.props.navigation.navigate("Test")}
                 underlayColor='#fff'>
 
               <Text style={styles.textBtn}
