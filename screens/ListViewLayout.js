@@ -42,7 +42,7 @@ const DATA = [
 ];
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
-    <SafeAreaView style={[{width:'55%',height:'100%'},styles.shadow]}>
+    <SafeAreaView style={[{width:'65%',height:'100%'},styles.shadow]}>
         <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor,styles.radius,{
             flex: 1,
             lexDirection: 'collum',
@@ -61,7 +61,7 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
     </SafeAreaView>
 );
 const ItemImage = ({ item}, parallaxProps) => (
-    <SafeAreaView style={[{width:300,height:'100%'},styles.item,styles.shadow]}>
+    <SafeAreaView style={[{width:'110%',height:'100%'},styles.item,styles.shadow]}>
         <TouchableOpacity  style={[styles.item,styles.radius]}>
             <Image style={[{
                 width:'100%',
@@ -70,14 +70,14 @@ const ItemImage = ({ item}, parallaxProps) => (
 
             }]} source={{uri: item.image}}/>
 
-            <ParallaxImage
-                source={{uri: item.image}}
-                itemHeight={300}
-                containerStyle={styles.imageContainer}
-                style={[styles.image,{height: 300,width: 300}]}
-                parallaxFactor={0.4}
-                {...parallaxProps}
-            />
+            {/*<ParallaxImage*/}
+            {/*    source={{uri: item.image}}*/}
+            {/*    itemHeight={300}*/}
+            {/*    containerStyle={styles.imageContainer}*/}
+            {/*    style={[styles.image,{height: 300,width: 300}]}*/}
+            {/*    parallaxFactor={0.4}*/}
+            {/*    {...parallaxProps}*/}
+            {/*/>*/}
         </TouchableOpacity>
     </SafeAreaView>
 );
@@ -200,17 +200,15 @@ const ListViewLayout = props => {
                         itemWidth={500}
 
                     />
-
-
                 </View>
 
             </View>
 
 
             {/*Popular------------------------*/}
-            <View style={[{flex: 2.5}]}>
+            <View style={[{flex: 2.5, flexDirection: "column"}]}>
                 {/*Text--------------------*/}
-                <View style={[{flex: 1, flexDirection: "row", justifyContent: "space-between"}]}>
+                <View style={[{flex: 1, flexDirection: "row", justifyContent: "space-between", backgroundColor: "transparent"}]}>
                     <Text style={[styles.textBold]}>Popular</Text>
                     <TouchableOpacity style={{alignItems: "flex-end"}}>
                         <Image style={[styles.radiusCircle, {
@@ -220,15 +218,18 @@ const ListViewLayout = props => {
                                source={imageMenuURL}/>
                     </TouchableOpacity>
                 </View>
-                <View style={[{flex:4, justifyContent: "center"}, styles.itemImage]}>
+                <View style={[{flex:4, alignContent: "flex-start"}, styles.itemImage]}>
                     <Carousel
                         ref={carouselRef}
                         sliderWidth={windowWidth}
-                        sliderHeight={300}
-                        itemWidth={300 - 30}
+                        // sliderHeight={300}
+                        itemWidth={windowWidth/1.9}
                         data={DATA}
                         renderItem={renderItemImage}
                         hasParallaxImages={true}
+                        firstItem={1}
+                        slideStyle={{alignContent: "flex-start"}}
+
                     />
 
                 </View>
@@ -246,8 +247,9 @@ const ListViewLayout = props => {
 
     },
     item: {
-        padding: 20,
-        marginVertical: 8,
+        // padding: 20,
+        // marginVertical: 10,
+        marginBottom: '5%',
         marginHorizontal: 16,
         shadowColor: "black",
     },
@@ -305,15 +307,15 @@ const ListViewLayout = props => {
     },
     itemImage: {
         display: "flex",
-        // justifyContent: "center",
-        // alignItems: "center",
+        justifyContent: "flex-start",
+        alignItems: "center",
         height: "100%",
         textAlign: "center",
     },
     shadow: {
         shadowColor: "#000",
         shadowOffset: {
-            width: 0,
+            width: 10,
             height: 3,
         },
         shadowOpacity: 0.2,
