@@ -1,81 +1,85 @@
-import React from "react";
-import {SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
-import {BUTTONS,COLORS} from "../constants";
+import React, { useState } from "react";
+import {SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View,Alert} from "react-native";
+import {BUTTONS, COLORS, FONTS, TEXTS} from "../constants";
+
+const [name,setName]= useState('');
+const [pass, setPass]=useState('');
+
+function click() {
+    Alert.alert(
+        "Alert "+name+"  "+pass,)
+    // if (name=='a' && pass=='a')
+    //     Alert.alert(
+    //     "Alert "+name+"  "+pass,)
+    // else   Alert.alert(
+    //     "Sai pass",)  
+    
+}
 const Login = ({navigation}) => {
+    
+    const onPress = () =>{
+        click()
+    }
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={[styles.container,{height: '30%'}]}>
-                <TextInput
-                    style={[{marginLeft: 20,height: '30%'}]}
+        <SafeAreaView>
+            <View style={[{
+                    ...TEXTS.textRadius,
+                    ...TEXTS.shadow,
+                    backgroundColor: COLORS.white,
+                    }]}>
+                <TextInput style={[{
+                   ...TEXTS.textInput, 
+                }, styles.input]}
                     placeholder="UserName"
+                    underlineColorAndroid="transparent"
+                    onChangeText={setName}
+                    value={name}
                 />
-
-                <TextInput
-                    style={[{marginLeft: 20,height: '30%'}]}
-                    placeholder="Password"
-                />
-
-                <TouchableOpacity
-                    onPress={()=>{
-                        navigation.navigate('Main')
-                    }}
-                    style={[{...BUTTONS.btnRadius}]}
-                >
-                    <Text>
-                        Login
-                    </Text>
-                </TouchableOpacity>
             </View>
+            
+            <View style={[{
+                    ...TEXTS.textRadius,
+                    ...TEXTS.shadow,
+                    backgroundColor: COLORS.white,
+                    }]}>
+                <TextInput
+                    style={[{
+                        ...TEXTS.textInput,
+                    },styles.input]}
+                    secureTextEntry={true}
+                    placeholder="Password"
+                    underlineColorAndroid="transparent"
+                    value={pass}
+                    onChangeText={setPass}
+                />
+            </View>
+           
+            <TouchableOpacity
+                style={{
+                    ...BUTTONS.btnRadius,
+                    ...BUTTONS.shadow,
+                    backgroundColor: COLORS.white,
+                }}
+                onPress={onPress}
+            >
+                <Text style={{...TEXTS.textBtn}}>
+                    Login
+                </Text>
+            </TouchableOpacity>
+            <Text> Count: {name}</Text>
 
         </SafeAreaView>
+
+
     )
-}
-const styles = StyleSheet.create({
+}, styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "flex-start",
+        backgroundColor: "#f4f3f3",
+        // marginTop: StatusBar.currentHeight || 0,
 
     },
-
-    text: {
-        color: "white",
-        lineHeight: 84,
-        fontWeight: "bold",
-        textAlign: "center",
-        fontFamily: "Lato-Regular"
-
-    },
-    textBtn: {
-        fontSize: 25,
-        lineHeight: 84,
-        fontWeight: "bold",
-        textAlign: "center",
-    },
-
-    btnSignUp: {
-        paddingHorizontal: 8,
-        paddingVertical: 6,
-        borderRadius: 4,
-        backgroundColor: "oldlace",
-        alignSelf: "flex-start",
-        marginHorizontal: "1%",
-        marginBottom: 6,
-        minWidth: "48%",
-        textAlign: "center",
-
-    },
-    radius: {
-        marginRight: 40,
-        marginLeft: 40,
-        marginTop: 10,
-        paddingTop: 0,
-        paddingBottom: 0,
-        borderRadius: 60,
-        borderWidth: 0,
-        borderColor: '#fff',
-    },
-
-});
+});    
 
 export default Login;

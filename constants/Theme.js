@@ -63,9 +63,55 @@ export const BUTTONS={
         marginTop: '3%',
         marginBottom: '3%',
     },
+    shadow: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 10,
+            height: 3,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        elevation: 3,
+    },
+    
 
-}
+};
+export const TEXTS={
+    textRadius:{
+        borderRadius: 60,
+        marginRight: '10%',
+        marginLeft: '10%',
+        marginTop: '3%',
+        marginBottom: '3%',
+    },
+    shadow: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 10,
+            height: 3,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        elevation: 3,
+    },
+    textBtn:{
+        fontSize: 25,
+        lineHeight: 60,
+        fontWeight: "bold",
+        textAlign: "center",
+        fontFamily: "Lato-Bold",
+    },
+    textInput:{
+        fontSize: 20,
+        // // fontWeight: "bold",
+        padding: "5%",
+        textAlign: "left",
+        marginLeft: '5%',
+        fontFamily: "Lato-Regular",
+        justifyContent: "flex-start",
+    }
+};
 
-const appTheme = { COLORS, SIZES, FONTS,BUTTONS };
+const appTheme = { COLORS, SIZES, FONTS,BUTTONS,TEXTS };
 
 export default appTheme;
