@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.15.5",
     "@react-native-community/blur": "^3.6.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-firebase/app": "^12.2.0",
@@ -17,6 +18,7 @@
     "expo": "~42.0.1",
     "expo-blur": "~9.0.3",
     "expo-status-bar": "~1.0.4",
+    "firebase": "^8.7.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",

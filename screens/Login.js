@@ -2,23 +2,30 @@ import React, { useState } from "react";
 import {SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View,Alert} from "react-native";
 import {BUTTONS, COLORS, FONTS, TEXTS} from "../constants";
 
-const [name,setName]= useState('');
-const [pass, setPass]=useState('');
 
-function click() {
-    Alert.alert(
-        "Alert "+name+"  "+pass,)
-    // if (name=='a' && pass=='a')
-    //     Alert.alert(
-    //     "Alert "+name+"  "+pass,)
-    // else   Alert.alert(
-    //     "Sai pass",)  
-    
-}
 const Login = ({navigation}) => {
     
+    const [name, setName] = useState('');
+    const [pass, setPass] = useState('');
+    const [noti,setNoti] = useState('');
+    
     const onPress = () =>{
-        click()
+        if (check(name, pass)) {
+            navigation.navigate('Main')
+        } else {
+            setNoti('Noti: Fail')
+        }
+    }
+
+
+   const check = (name, pass) => {
+        ;
+        // Alert.alert(
+        //     "Alert "+name+"  "+pass,)
+        if (name == 'a' && pass == 'a')
+            return true
+        else return false
+
     }
 
     return (
@@ -27,6 +34,7 @@ const Login = ({navigation}) => {
                     ...TEXTS.textRadius,
                     ...TEXTS.shadow,
                     backgroundColor: COLORS.white,
+                    
                     }]}>
                 <TextInput style={[{
                    ...TEXTS.textInput, 
@@ -67,7 +75,7 @@ const Login = ({navigation}) => {
                     Login
                 </Text>
             </TouchableOpacity>
-            <Text> Count: {name}</Text>
+            <Text style={{color: "red"}}> {noti}</Text>
 
         </SafeAreaView>
 

@@ -1,13 +1,23 @@
-import React from "react";
-import { ImageBackground, StyleSheet, Text, View, Button, Alert,TouchableOpacity,Image } from "react-native";
-import {BlurView} from '@react-native-community/blur';
+import React, { useState } from "react";
+import {ImageBackground, StyleSheet, Text, View, Button, Alert, TouchableOpacity, Image, TextInput,Modal} from "react-native";
 import {windowHeight, windowWidth, window} from "../utils";
-import {BUTTONS, COLORS} from "../constants";
+import {BUTTONS, COLORS, TEXTS} from "../constants";
+
+import {Overlay } from 'react-native-elements';
+import { registerRootComponent } from "expo";
 
 
 const imageURL = { uri: "https://thuthuatnhanh.com/wp-content/uploads/2020/09/hinh-nen-la-cay-mau-xanh-dam.jpg" };
 
-const LayoutLogin = (props) => (
+const LayoutLogin = (props) => {
+  const [username,setUsername]=useState('');
+  const [password,setPassword]=useState('');
+  const [visible, setVisible] = useState(false);
+  const setOverlay = () => {
+    setVisible(!visible);
+  };
+  return (
+
     <View style={styles.containerBackground }>
       {/* ---------------------------- */}
 
@@ -37,10 +47,7 @@ const LayoutLogin = (props) => (
                   ...BUTTONS.btnRadius,
                   backgroundColor: "#000000a0",
                 }]}
-                onPress={() => {
-                  // console.log('tesst',props)
-                  props.navigation.navigate('Register')
-                }}
+                onPress={setOverlay}
                 underlayColor='#fff'>
               <Text style={[styles.textBtn,{color:"#fff"}]}
               >Sign up</Text>
@@ -72,11 +79,77 @@ const LayoutLogin = (props) => (
         }}>Terms of Service</Text>
       </View>
 
+
+        {/* --------------Overlay------------- */}
+
+        {visible?(
+
+      <Overlay 
+      // isVisible={visible}
+       onBackdropPress={setOverlay} fullScreen={false}
+          animationType="slide"
+          backdropStyle={{ color:'#000000a8', }}
+          overlayStyle={{borderRadius: 30}}
+        >
+          <View>
+
+            <View style={[{
+              ...TEXTS.textRadius,
+              ...TEXTS.shadow,
+              backgroundColor: COLORS.white,
+              width: windowWidth / 1.5,
+            }]}>
+              <TextInput style={[{
+                ...TEXTS.textInput,
+              }, styles.input]}
+                placeholder="UserName"
+                value={username}
+                
+                underlineColorAndroid="transparent"
+              />
+            </View>
+
+            <View style={[{
+              ...TEXTS.textRadius,
+              ...TEXTS.shadow,
+              backgroundColor: COLORS.white,
+            }]}>
+              <TextInput
+                style={[{
+                  ...TEXTS.textInput,
+                }, styles.input]}
+                secureTextEntry={true}
+                placeholder="Password"
+                value={password}
+              
+                underlineColorAndroid="transparent"
+              />
+            </View>
+
+            <TouchableOpacity
+              style={{
+                ...BUTTONS.btnRadius,
+                ...BUTTONS.shadow,
+                backgroundColor: COLORS.white,
+              }}
+              onPress={() => {
+                setOverlay()
+                
+                props.navigation.navigate('Main')
+              }}
+            >
+              <Text style={{ ...TEXTS.textBtn }}>
+                Register
+              </Text>
+            </TouchableOpacity>
+
+        </View>
+        
+      </Overlay>
+      ):null}
     </View>
 
-);
-
-const styles = StyleSheet.create({
+)}, styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-around",

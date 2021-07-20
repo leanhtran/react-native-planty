@@ -16,7 +16,7 @@ const Tabs=()=> {
             tabBarOptions={{showLabel: false}}
         >
             <Tab.Screen name="Buy"
-                        component={LayoutBuy}
+                        component={ListViewLayout}
                         options={{
                             tabBarIcon: ({ focused }) => (
                                 <Image
@@ -46,7 +46,7 @@ const Tabs=()=> {
                             ),
                         }}
             />
-            <Tab.Screen name="List" component={ListViewLayout}
+            <Tab.Screen name="List" component={LayoutBuy}
                         options={{
                             tabBarIcon: ({ focused }) => (
                                 <Image

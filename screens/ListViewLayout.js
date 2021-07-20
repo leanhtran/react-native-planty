@@ -25,16 +25,19 @@ import {Touchable} from "react-native-web";
 
 const DATA = [
     {
+        id: "01",
         name: "ABC",
         image: "https://free.vector6.com/wp-content/uploads/2021/03/0000000156-cay-xanh-chau-cay-tai-hinh-cay-canh-png-42.png",
         price: 10000,
     },
     {
-        name: "ABC",
+        id: "02",
+        name: "edgdkufghkdfghkdfghkdfhgkdfhgdkfhgkdfhgdkghdkfghkdfghdkfg",
         image: "https://free.vector6.com/wp-content/uploads/2021/03/0000000125-cay-xanh-chau-cay-tai-hinh-cay-canh-png-11.png",
         price: 10000,
     },
     {
+        id: "03",
         name: "ABC",
         image: "https://free.vector6.com/wp-content/uploads/2021/03/0000000121-cay-xanh-chau-cay-tai-hinh-cay-canh-png-7.png",
         price: 10000,
@@ -82,10 +85,13 @@ const ItemImage = ({ item}, parallaxProps) => (
     </SafeAreaView>
 );
 
-const ListViewLayout = props => {
+const ListViewLayout = (props) => {
+
+
     const [selectedId, setSelectedId] = useState(null);
     const [entries, setEntries] = useState([]);
     const carouselRef = useRef(null);
+    const[item, setItem]=useState(DATA)
 
     const [] = useFonts({
         "Lato-Black" : require('../assets/fonts/Lato-Black.ttf'),
@@ -93,15 +99,10 @@ const ListViewLayout = props => {
 
     })
     const renderItem = ({item}) => {
-        const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
-        const color = item.id === selectedId ? '#5e7f51' : 'black';
-
         return (
             <Item
                 item={item}
-                onPress={() => setSelectedId(item.id)}
-                backgroundColor={{backgroundColor}}
-                textColor={{color}}
+                onPress={() => props.navigation.navigate("LayoutBuy",item)}
             />
         );
     };
@@ -195,6 +196,7 @@ const ListViewLayout = props => {
                     <Carousel
                         data={DATA}
                         layout={"stack"}
+                        keyExtractor={(item) => item.id}
                         renderItem={renderItem}
                         sliderWidth={300}
                         itemWidth={500}

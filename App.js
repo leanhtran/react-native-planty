@@ -1,5 +1,5 @@
 import React from "react";
-import {BlurView} from '@react-native-community/blur';
+
 import LayoutLogin from './screens/LayoutLogin';
 import LayoutBuy from './screens/LayoutBuy';
 import ListViewLayout from './screens/ListViewLayout';

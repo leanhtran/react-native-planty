@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import {Text, Image, View, StyleSheet, TouchableOpacity, SafeAreaView} from "react-native";
 import {BUTTONS} from "../constants";
 const imageURL={uri: 'https://ecogarden.net.vn/wp-content/uploads/2019/06/dba25ce8c08ceb84c8a471ab7fd0df46.jpg'};
 const imageBackURL={uri: 'https://png.pngtree.com/png-vector/20190501/ourlarge/pngtree-vector-back-icon-png-image_1009850.jpg'};
 const imageMenuURL={uri: 'https://cdn.iconscout.com/icon/free/png-256/menu-2694328-2236324.png'};
-const LayoutBuy=()=>(
+const LayoutBuy = ({ route, navigation })=>{
+    const[item,setItem]=useState(null);
+    React.useEffect(() => {
+        const items = route.params;
+        setItem(items)
 
+    })
+    return(
     <SafeAreaView style={styles.container}>
         {/*Action bar------------------*/}
         <View style={{flex: 0.4, flexDirection: "row", justifyContent: "space-between"}}>
-            <TouchableOpacity style={{}}>
+            <TouchableOpacity onPress={()=> navigation.goBack()}
+            style={{}}>
                 <Image style={[styles.radiusCircle,
                     {
                         width:30,
@@ -36,7 +43,7 @@ const LayoutBuy=()=>(
                 // resizeMode: "contain",
                 justifyContent: "flex-start",
             }}
-                   source={imageURL}>
+                   source={{uri: item?.image}}>
             </Image>
             {/*Text--------------*/}
             <View style={{flex: 1}}>
@@ -87,7 +94,7 @@ const LayoutBuy=()=>(
 
     </SafeAreaView>
 
-);
+)};
 const styles=StyleSheet.create({
     container: {
         flex: 1,
