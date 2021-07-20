@@ -1,14 +1,22 @@
-import React from "react";
-import {Text, Image,View,StyleSheet,TouchableOpacity} from "react-native";
+import React, { useState } from "react";
+import {Text, Image, View, StyleSheet, TouchableOpacity, SafeAreaView} from "react-native";
+import {BUTTONS} from "../constants";
 const imageURL={uri: 'https://ecogarden.net.vn/wp-content/uploads/2019/06/dba25ce8c08ceb84c8a471ab7fd0df46.jpg'};
 const imageBackURL={uri: 'https://png.pngtree.com/png-vector/20190501/ourlarge/pngtree-vector-back-icon-png-image_1009850.jpg'};
 const imageMenuURL={uri: 'https://cdn.iconscout.com/icon/free/png-256/menu-2694328-2236324.png'};
-const App=()=>(
+const LayoutBuy = ({ route, navigation })=>{
+    const[item,setItem]=useState(null);
+    React.useEffect(() => {
+        const items = route.params;
+        setItem(items)
 
-    <View style={styles.container}>
+    })
+    return(
+    <SafeAreaView style={styles.container}>
         {/*Action bar------------------*/}
-        <View style={{flex: 0.5, flexDirection: "row", justifyContent: "space-between"}}>
-            <TouchableOpacity style={{}}>
+        <View style={{flex: 0.4, flexDirection: "row", justifyContent: "space-between"}}>
+            <TouchableOpacity onPress={()=> navigation.goBack()}
+            style={{}}>
                 <Image style={[styles.radiusCircle,
                     {
                         width:30,
@@ -35,7 +43,7 @@ const App=()=>(
                 // resizeMode: "contain",
                 justifyContent: "flex-start",
             }}
-                   source={imageURL}>
+                   source={{uri: item?.image}}>
             </Image>
             {/*Text--------------*/}
             <View style={{flex: 1}}>
@@ -62,7 +70,7 @@ const App=()=>(
             </View>
         </View>
 
-        <View style={[styles.radius,{flex: 1.5}]}>
+        <View style={[styles.radius,{flex: 1.5,marginBottom: '2%'}]}>
             {/*Text--------------------*/}
             <View style={[{flex: 5}]}>
                 <Text style={[styles.textGreen]}>
@@ -74,20 +82,23 @@ const App=()=>(
                 </Text>
             </View>
             {/*Button---------------------*/}
-            <View style={[{flex: 2}]}>
-                <TouchableOpacity style={[styles.radiusBtn]}>
+            <View style={[{flex: 2, marginBottom: '3%'}]}>
+                <TouchableOpacity style={[{
+                    ...BUTTONS.btnRadius,
+                    backgroundColor: "#152824",
+                }]}>
                     <Text style={[styles.textBtn,{color: "#fff"}]}>Buy Now</Text>
                 </TouchableOpacity>
             </View>
         </View>
 
-    </View>
+    </SafeAreaView>
 
-);
+)};
 const styles=StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#f7f7f7"
+        backgroundColor: "#ffff"
     },
     image: {
         flex: 1,
@@ -106,8 +117,8 @@ const styles=StyleSheet.create({
         fontSize: 30,
         fontWeight: "bold",
         textAlign: "center",
-        marginTop: 30,
-        marginBottom: 5,
+        marginTop: '5%',
+        marginBottom: '2%',
         marginLeft: 10,
         marginRight: 10,
         color: "#48663b"
@@ -115,23 +126,23 @@ const styles=StyleSheet.create({
     textDescription :{
         fontSize: 18,
         textAlign: "center",
-        marginTop: 3,
-        marginBottom: 3,
+        marginTop: '1%',
+        marginBottom: '3%',
         marginLeft: 10,
         marginRight: 10
     },
     textTree:{
         fontSize: 16,
         textAlign: "center",
-        marginTop: 10,
-        marginBottom: 10,
+        marginTop: '11%',
+        marginBottom: '11%',
     },
-    textBtn:{
-        fontSize: 18,
+    textBtn: {
+        fontSize: 25,
+        lineHeight: 60,
+        fontWeight: "bold",
         textAlign: "center",
-        fontWeight:"bold",
-        marginTop: 10,
-        marginBottom: 10,
+        fontFamily: "Lato-Bold"
     },
     radiusBtn: {
         borderRadius: 60,
@@ -160,4 +171,4 @@ const styles=StyleSheet.create({
         marginRight: 20
     }
 });
-export default App;
+export default LayoutBuy;
