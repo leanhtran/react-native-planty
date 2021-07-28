@@ -9,6 +9,9 @@ import LayoutBuy from "../screens/LayoutBuy";
 import ListViewLayout from "../screens/ListViewLayout";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
+import FireBaseLogin from "../screens/FireBaseLogin";
+import FireBaseHome from "../screens/FireBaseHome";
+import FireBaseRegister from "../screens/FireBaseRegister";
 
 const MyTheme = {
     ...DefaultTheme,
@@ -28,7 +31,7 @@ const NavigationC = () => {
 
     return (
         <NavigationContainer theme={MyTheme}>
-            <Stack.Navigator initialRouteName="LayoutLogin"
+            <Stack.Navigator initialRouteName="Test"
                              screenOptions={{
                                  headerShown: false
                              }}
@@ -41,6 +44,9 @@ const NavigationC = () => {
                 <Stack.Screen name="ListViewLayout" component={ListViewLayout} />
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Register" component={Register} />
+                <Stack.Screen name="FireBaseHome" component={FireBaseHome} />
+                <Stack.Screen name="FireBaseRegister" component={FireBaseRegister} />
+                <Stack.Screen name="FireBaseLogin" component={FireBaseLogin} />
             </Stack.Navigator>
         </NavigationContainer>
     )

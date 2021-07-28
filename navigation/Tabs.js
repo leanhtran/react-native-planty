@@ -6,6 +6,7 @@ import LayoutBuy from "../screens/LayoutBuy";
 import LayoutLogin from "../screens/LayoutLogin";
 import {Image} from "react-native";
 
+
 import {Icons, COLORS} from "../constants";
 
 const Tab = createBottomTabNavigator();
