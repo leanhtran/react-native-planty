@@ -91,7 +91,9 @@ const LayoutBuy = ({ route, navigation })=>{
                 </TouchableOpacity>
             </View>
         </View>
-
+                    <Text>
+                        Test {item.Image}
+                    </Text>
     </SafeAreaView>
 
 )};

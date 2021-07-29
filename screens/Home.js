@@ -237,7 +237,7 @@ const ListViewLayout = (props) => {
                     />
 
                 </View>
-
+                 <Text> Test</Text>           
 
             </View>
 
