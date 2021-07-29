@@ -90,6 +90,9 @@ const LayoutBuy = ({ route, navigation })=>{
                     <Text style={[styles.textBtn,{color: "#fff"}]}>Buy Now</Text>
                 </TouchableOpacity>
             </View>
+            <Text>
+                textDescription +{item.Image}
+            </Text>
         </View>
 
     </SafeAreaView>
