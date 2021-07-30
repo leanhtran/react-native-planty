@@ -103,7 +103,7 @@ const Login = ({ navigation }) => {
                     Register
                 </Text>
             </TouchableOpacity>
-            <Text style={{ color: "red" }}> {noti}</Text>
+            <Text style={{ color: "red", padding: 20, borderRadius: 10 }}> {noti}</Text>
 
         </SafeAreaView>
 
